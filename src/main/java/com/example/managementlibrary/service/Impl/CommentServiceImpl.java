@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,8 @@ public class CommentServiceImpl extends GenericServiceImp<Comment,Long, CommentR
 
     @Override
     public List<CommentResponse> findByParentExistsAndBookId(Long bookId) {
-        return commentRepository.findByParentAndBookId(bookId).stream().map(e->transformEntityToDTO(e)).collect(Collectors.toList());
+        List<CommentResponse>commentResponses =commentRepository.findByParentAndBookId(bookId).stream().map(e->transformEntityToDTO(e)).collect(Collectors.toList());
+        Collections.reverse(commentResponses);
+        return commentResponses;
     }
 }
