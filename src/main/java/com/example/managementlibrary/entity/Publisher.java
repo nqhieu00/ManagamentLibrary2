@@ -16,10 +16,10 @@ public class Publisher extends Base{
 
     @Column(unique = true)
     private String name;
-    private String addr;
+   /* private String addr;
     @Column(unique = true)
     private String email;
-    private String representative;
+    private String representative;*/
     @OneToMany(mappedBy = "publisher")
     private List<Book> books = new ArrayList<>();
 
