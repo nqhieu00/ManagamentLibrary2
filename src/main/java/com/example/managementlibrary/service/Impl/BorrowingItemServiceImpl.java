@@ -77,9 +77,10 @@ public class BorrowingItemServiceImpl extends GenericServiceImp<BorrowingItem, L
 
     @Override
     public void changeStatusById(Long id, boolean status) {
+
         BorrowingItem borrowingItem=borrowingItemRepository.findById(id).orElseThrow(()->new GenericException("Item with id = "+id+" does not exist"));
         Book book=bookRepository.getById(borrowingItem.getBook().getId());
-        if(borrowingItem.getStatus()!=status){
+        if(borrowingItem.getStatus()!=status&&borrowingItem.getBorrowing().getStatus()==1){
             borrowingItem.setStatus(status);
             if(status){
                 book.setCount(book.getCount()+1);
@@ -89,6 +90,9 @@ public class BorrowingItemServiceImpl extends GenericServiceImp<BorrowingItem, L
                 book.setCount(book.getCount()-1);
                 bookRepository.save(book);
             }
+        }
+        else {
+            throw new GenericException("The borrowing is waiting for confirm or refuse");
         }
 
         borrowingItemRepository.save(borrowingItem);
