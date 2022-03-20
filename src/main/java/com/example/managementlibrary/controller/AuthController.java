@@ -50,7 +50,7 @@ public class AuthController {
         try {
             String token = RandomString.make(30);
             authService.userSignup(signupRequest, token);
-            String verityLink = Utility.getSiteURL(request) + "/v1/api/auth/verify?token=" + token;
+            String verityLink ="https://final-thuvienthuyloi.netlify.app/successRegister?token=" + token;
             mailService.sendEmailVerityAccount(signupRequest.getEmail(), verityLink);
 
             return new ResponseEntity("Please check your mail to verify your account", HttpStatus.OK);
@@ -58,6 +58,7 @@ public class AuthController {
             return new ResponseEntity(new ApiError(HttpStatus.CONFLICT, "Register failed", e), HttpStatus.CONFLICT);
         }
     }
+
 
     @GetMapping("/verify")
     public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
@@ -85,7 +86,7 @@ public class AuthController {
         String message = "";
         try {
             userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = "https://brave-jennings-e392ff.netlify.app/resetpassword/?token=" + token;
+            String resetPasswordLink = "https://final-thuvienthuyloi.netlify.app/resetpassword/?token=" + token;
             mailService.sendEmailResetPassword(email, resetPasswordLink);
             message = token;
         } catch (GenericException e) {
