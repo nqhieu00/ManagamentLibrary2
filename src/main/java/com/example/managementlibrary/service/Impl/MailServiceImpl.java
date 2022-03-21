@@ -52,12 +52,12 @@ public class MailServiceImpl implements MailService
 	}
 
 	@Override
-	public void sendEmailVerityAccount(String email, String verityLink) throws MessagingException {
+	public void sendEmailVerityAccount(String email,String name, String verityLink) throws MessagingException {
 		Mail mail=new Mail();
 		mail.setMailFrom("ptdapm60th1@gmail.com");
 		mail.setMailTo(email);
 		mail.setMailSubject("Please verify your registration");
-		String content = "Dear [[name]],<br>"
+		String content = "Dear "+name+",<br>"
 				+ "Please click the link below to verify your registration:<br>"
 				+ "<h3><a href=\""+verityLink+"\">VERIFY</a></h3>"
 				+ "Thank you,<br>";

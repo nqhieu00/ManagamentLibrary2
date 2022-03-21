@@ -9,5 +9,5 @@ public interface MailService
 	void sendEmail(Mail mail) throws MessagingException;
 
     void sendEmailResetPassword(String email,String resetPasswordLink) throws MessagingException;
-    void sendEmailVerityAccount(String email,String verityLink) throws MessagingException;
+    void sendEmailVerityAccount(String email,String name,String verityLink) throws MessagingException;
 }

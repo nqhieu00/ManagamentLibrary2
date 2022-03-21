@@ -50,8 +50,9 @@ public class AuthController {
         try {
             String token = RandomString.make(30);
             authService.userSignup(signupRequest, token);
+
             String verityLink ="https://final-thuvienthuyloi.netlify.app/successRegister?token=" + token;
-            mailService.sendEmailVerityAccount(signupRequest.getEmail(), verityLink);
+            mailService.sendEmailVerityAccount(signupRequest.getEmail(),  signupRequest.getName(), verityLink);
 
             return new ResponseEntity("Please check your mail to verify your account", HttpStatus.OK);
         } catch (MessagingException | GenericException e) {
