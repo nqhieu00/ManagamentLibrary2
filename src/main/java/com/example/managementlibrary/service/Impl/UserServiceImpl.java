@@ -144,19 +144,17 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
         user.setToken(token);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addCart();
-        /*   try {*/
+        if(userRepository.existsByEmail(user.getEmail())&&userRepository.existsByPhone(user.getPhone())) {
+            throw new GenericException("Email và phone number đã tồn tại");
+        }
+        else if(userRepository.existsByEmail(user.getEmail())){
+            throw new GenericException("Email đã tồn tại");
+        }
+        else if(userRepository.existsByPhone(user.getPhone())){
+            throw new GenericException("Phone number đã tồn tại");
+        }
         userRepository.save(user);
-       /* }
-        catch (DataIntegrityViolationException e){
-            String msg = e.getMessage();
-            if (e.getCause().getCause() instanceof SQLException) {
-                SQLException ex = (SQLException) e.getCause().getCause();
-                if (ex.getMessage().contains("Key")) {
-                    msg = ex.getMessage().substring(ex.getMessage().indexOf("Key"));
-                }
-            }
-            throw new GenericException(msg);
-        }*/
+
 
     }
 
