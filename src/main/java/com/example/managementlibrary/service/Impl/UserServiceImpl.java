@@ -67,18 +67,23 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
         element.setPassword(passwordEncoder.encode(element.getPassword()));
         User user = transformDTOToEntity(element);
         user.addCart();
-        if(userRepository.existsByEmail(user.getEmail())&&userRepository.existsByPhone(user.getPhone())) {
-            throw new GenericException("Email và phone number đã tồn tại");
-        }
-        else if(userRepository.existsByEmail(user.getEmail())){
-            throw new GenericException("Email đã tồn tại");
-        }
-        else if(userRepository.existsByPhone(user.getPhone())){
-            throw new GenericException("Phone number đã tồn tại");
-        }
+        validationUser(user);
+
 
 
         return transformEntityToDTO(userRepository.save(user));
+    }
+
+    private void validationUser(User user) {
+        if(userRepository.existsByEmail(user.getEmail())&&userRepository.existsByPhone(user.getPhone())) {
+            throw new GenericException("Email: đã tồn tại,Phone number: đã tồn tại");
+        }
+        else if(userRepository.existsByEmail(user.getEmail())){
+            throw new GenericException("Email: đã tồn tại");
+        }
+        else if(userRepository.existsByPhone(user.getPhone())){
+            throw new GenericException("Phone number: đã tồn tại");
+        }
     }
 
 
@@ -90,7 +95,6 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
         if (!checkBcrypt(element.getPassword())) {
             element.setPassword(passwordEncoder.encode(element.getPassword()));
         }
-
         return super.update(element, id);
     }
 
@@ -144,15 +148,7 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
         user.setToken(token);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addCart();
-        if(userRepository.existsByEmail(user.getEmail())&&userRepository.existsByPhone(user.getPhone())) {
-            throw new GenericException("Email và phone number đã tồn tại");
-        }
-        else if(userRepository.existsByEmail(user.getEmail())){
-            throw new GenericException("Email đã tồn tại");
-        }
-        else if(userRepository.existsByPhone(user.getPhone())){
-            throw new GenericException("Phone number đã tồn tại");
-        }
+        validationUser(user);
         userRepository.save(user);
 
 
