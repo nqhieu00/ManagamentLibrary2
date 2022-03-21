@@ -79,7 +79,7 @@ public abstract class GenericAPI<E,I,D1,D2> {
 
             return new ResponseEntity(genericService.get(id),HttpStatus.OK);
         }
-        catch (GenericException | DataIntegrityViolationException  e){
+        catch (GenericException e){
             return new ResponseEntity(new ApiError(HttpStatus.CONFLICT, "Get failed", e),HttpStatus.CONFLICT);
 
         }
@@ -95,7 +95,7 @@ public abstract class GenericAPI<E,I,D1,D2> {
 
             return new ResponseEntity(genericService.create(dto),HttpStatus.CREATED);
         }
-        catch (GenericException | DataIntegrityViolationException  e){
+        catch (GenericException e){
             return new ResponseEntity(new ApiError(HttpStatus.CONFLICT, "Create failed", e),HttpStatus.CONFLICT);
           //  return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -112,7 +112,7 @@ public abstract class GenericAPI<E,I,D1,D2> {
 
             return new ResponseEntity( genericService.update(dto,id) ,HttpStatus.OK);
         }
-        catch (GenericException | DataIntegrityViolationException  e){
+        catch (GenericException e){
             return new ResponseEntity(new ApiError(HttpStatus.CONFLICT, "Update failed", e),HttpStatus.CONFLICT);
             //return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
