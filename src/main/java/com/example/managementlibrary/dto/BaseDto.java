@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public abstract class BaseDto {
    protected Long id;
    protected Long createdBy;
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
    protected LocalDateTime createdAt;
    protected Long updatedBy;
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
    protected LocalDateTime updatedAt;
 }
