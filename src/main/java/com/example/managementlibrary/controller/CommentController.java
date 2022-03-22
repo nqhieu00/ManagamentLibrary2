@@ -28,9 +28,13 @@ public class CommentController extends GenericAPI<Comment,Long, CommentRequest, 
     @Autowired
     private CommentService commentService;
 
+
     @GetMapping("/book/{id}")
-    public ResponseEntity<List<CommentResponse>> findByParentExistsAndBookId(@PathVariable Long id){
-        return new ResponseEntity<>( commentService.findByParentExistsAndBookId(id), HttpStatus.OK);
+    @PreAuthorize("isAnonymous()")
+    public ResponseEntity<Page<CommentResponse>> findByParentExistsAndBookId(@PathVariable Long id,
+                                                                             @RequestParam(value = "page") Integer page,
+                                                                             @RequestParam(value = "limit") Integer limit){
+        return new ResponseEntity<>( commentService.findByParentExistsAndBookId(id,page,limit), HttpStatus.OK);
     }
 
     @Override

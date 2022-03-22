@@ -10,6 +10,9 @@ import com.example.managementlibrary.repository.GenericRepository;
 import com.example.managementlibrary.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -48,9 +51,13 @@ public class CommentServiceImpl extends GenericServiceImp<Comment,Long, CommentR
     }
 
     @Override
-    public List<CommentResponse> findByParentExistsAndBookId(Long bookId) {
-        List<CommentResponse>commentResponses =commentRepository.findByParentAndBookId(bookId).stream().map(e->transformEntityToDTO(e)).collect(Collectors.toList());
-        Collections.reverse(commentResponses);
-        return commentResponses;
+    public Page<CommentResponse> findByParentExistsAndBookId(Long bookId,Integer page,Integer limit) {
+      /*  List<CommentResponse>commentResponses =commentRepository.findByParentAndBookId(bookId).stream().map(e->transformEntityToDTO(e)).collect(Collectors.toList());
+        Collections.reverse(commentResponses);*/
+        Sort.Order order = new Sort.Order(Sort.Direction.DESC, "id");
+        Sort sorting = Sort.by(order);
+        Pageable pageable = PageRequest.of(page, limit, sorting);
+
+        return commentRepository.findByParentAndBookId(bookId,pageable).map(this::transformEntityToDTO);
     }
 }
