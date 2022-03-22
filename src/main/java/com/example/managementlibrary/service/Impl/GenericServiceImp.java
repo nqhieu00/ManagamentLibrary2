@@ -231,9 +231,14 @@ public abstract class GenericServiceImp<E, I extends Serializable, D1,D2> implem
     public D2 create(D1 element) {
         try {
             return transformEntityToDTO(repository.save(transformDTOToEntity(element)));
-        } catch (Exception e) {
+        }
+        catch (DataIntegrityViolationException e){
+            throw new GenericException(e.getCause().getCause().getMessage());
+        }
+        catch (Exception e) {
             throw new GenericException(e.getMessage());
         }
+
 
     }
 
@@ -245,9 +250,14 @@ public abstract class GenericServiceImp<E, I extends Serializable, D1,D2> implem
                 setId(id, element, "id");
                 E e = repository.save(transformDTOToEntity(element));
                 return this.transformEntityToDTO(e);
-            } catch (Exception e) {
+            }
+            catch (DataIntegrityViolationException e){
+                throw new GenericException(e.getCause().getCause().getMessage());
+            }
+            catch (Exception e) {
                 throw new GenericException(e.getMessage());
             }
+
         } else {
             throw new GenericException("Id = " + id + " does not exist");
         }

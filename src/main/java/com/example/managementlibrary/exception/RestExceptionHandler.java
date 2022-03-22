@@ -121,6 +121,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             if (e.getMessage().contains("key")) {
                 try {
                     msg = e.getMessage().substring(e.getMessage().indexOf("Duplicate"));
+                    if(msg.contains("UK_or6k6jmywerxbme223c988bmg")){
+                        msg="Tác giả đã tồn tại";
+                    }
+                    else if(msg.contains("UK_46ccwnsi9409t36lurvtyljak")){
+                        msg="Thể loại đã tồn tại";
+                    }
+                    else if(msg.contains("UK_h9trv4xhmh6s68vbw9ba6to70")){
+                        msg="Nhà xuất bản đã tồn tại";
+                    }
                 }
                 catch (Exception e1){
                     msg=e.getMessage();
