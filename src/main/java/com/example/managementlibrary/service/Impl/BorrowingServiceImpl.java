@@ -3,15 +3,13 @@ package com.example.managementlibrary.service.Impl;
 import com.example.managementlibrary.dto.request.BorrowingItemRequest;
 import com.example.managementlibrary.dto.request.BorrowingRequest;
 import com.example.managementlibrary.dto.response.BorrowingResponse;
+import com.example.managementlibrary.entity.Book;
 import com.example.managementlibrary.entity.Borrowing;
 import com.example.managementlibrary.entity.BorrowingItem;
 import com.example.managementlibrary.exception.GenericException;
 import com.example.managementlibrary.mapper.BorrowingItemMapper;
 import com.example.managementlibrary.mapper.BorrowingMapper;
-import com.example.managementlibrary.repository.BorrowingItemRepository;
-import com.example.managementlibrary.repository.BorrowingRepository;
-import com.example.managementlibrary.repository.CartItemRepository;
-import com.example.managementlibrary.repository.GenericRepository;
+import com.example.managementlibrary.repository.*;
 import com.example.managementlibrary.service.BorrowingItemService;
 import com.example.managementlibrary.service.BorrowingService;
 import com.example.managementlibrary.service.CartItemService;
@@ -42,6 +40,9 @@ public class BorrowingServiceImpl extends GenericServiceImp<Borrowing,Long, Borr
 
     @Autowired
     CartItemRepository cartItemRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
 
 
@@ -92,8 +93,20 @@ public class BorrowingServiceImpl extends GenericServiceImp<Borrowing,Long, Borr
     @Override
     public void changeStatusById(Long id,int status) {
         Borrowing borrowing=borrowingRepository.findById(id).orElseThrow(()-> new GenericException("Borrowing with id = "+id+" does not exist"));
-        borrowing.setStatus(status);
-        borrowingRepository.save(borrowing);
+        if(borrowing.getStatus()!=status){
+            if(status==1){
+                borrowing.getBorrowingItems().forEach(e->{
+                    Book book=e.getBook();
+                    Long count=book.getCount();
+                    book.setCount(count-1);
+                    bookRepository.save(book);
+                });
+            }
+            borrowing.setStatus(status);
+            borrowingRepository.save(borrowing);
+        }
+
+
 
     }
 }

@@ -117,21 +117,11 @@ public class BorrowingItemServiceImpl extends GenericServiceImp<BorrowingItem, L
 
     @Override
     public BorrowingItemResponse create(BorrowingItemRequest element) {
-        Book book=bookRepository.getById(element.getBookId());
-        book.setCount(book.getCount()-1);
-        bookRepository.save(book);
         element.setStatus(false);
         return super.create(element);
     }
 
-   /* private void createItem(BorrowingItemRequest e, Long id) {
-      //  e.setBorrowingId(id);
-        e.setStatus(false);
-        super.create(e);
-        Book book=bookRepository.getById(e.getBookId());
-        book.setCount(book.getCount()-1);
-        bookRepository.save(book);
-    }*/
+
 
     @Override
     @Transactional

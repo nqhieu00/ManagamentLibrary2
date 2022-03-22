@@ -39,12 +39,15 @@ public class Book extends Base{
     private Set<Author> authors = new HashSet<>();
 
     @OneToMany(mappedBy = "book",orphanRemoval = true,cascade = CascadeType.ALL)
-    private List<CartItem> items=new ArrayList<>();
+    private List<CartItem> cartItems=new ArrayList<>();
+
+    @OneToMany(mappedBy = "book",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<BorrowingItem> borrowingItems=new ArrayList<>();
 
 
 
     @OneToMany(mappedBy = "book",orphanRemoval = true,cascade = CascadeType.ALL)
-    List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments=new ArrayList<>();
 
 
 
