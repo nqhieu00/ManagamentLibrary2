@@ -39,9 +39,9 @@ public class User extends Base {
     private Cart cart;
 
     @OneToMany(mappedBy = "user",orphanRemoval = true,cascade = CascadeType.ALL)
-    List<Borrowing> borrowings=new ArrayList<>();
+    private List<Borrowing> borrowings=new ArrayList<>();
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user",orphanRemoval = true,cascade = CascadeType.ALL)
     private RefreshToken refreshToken;
     public void addCart(){
         if(this.cart==null){
