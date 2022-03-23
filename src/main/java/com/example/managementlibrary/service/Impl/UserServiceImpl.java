@@ -12,9 +12,11 @@ import com.example.managementlibrary.mapper.UserMapper;
 import com.example.managementlibrary.repository.GenericRepository;
 import com.example.managementlibrary.repository.RoleRepository;
 import com.example.managementlibrary.repository.UserRepository;
+import com.example.managementlibrary.service.FilesStorageService;
 import com.example.managementlibrary.service.UserService;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +62,9 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    FilesStorageService storageService;
 
     @Override
     @Transactional
@@ -192,6 +199,13 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
     @Override
     public void updateImage(Long id, String img) {
         User user = userRepository.findById(id).orElseThrow(() -> new GenericException("User with id = " + id + "not exists"));
+        try {
+            Resource file = storageService.load(user.getImg());
+            file.getFile().delete();
+        }
+        catch (Exception e){
+            //throw new GenericException("Change your image failed");
+        }
         user.setImg(img);
         userRepository.save(user);
     }
