@@ -10,9 +10,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
+
 @Setter
 @Getter
+@Entity
 public class User extends Base {
 
     private String name;

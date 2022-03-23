@@ -1,12 +1,8 @@
 package com.example.managementlibrary.service;
 
-import com.example.managementlibrary.common.Filter;
 import com.example.managementlibrary.dto.request.UserRequest;
 import com.example.managementlibrary.dto.response.UserResponse;
 import com.example.managementlibrary.entity.User;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface UserService extends GenericService<User,Long, UserRequest, UserResponse> {
 

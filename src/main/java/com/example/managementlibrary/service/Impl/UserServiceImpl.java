@@ -1,11 +1,8 @@
 package com.example.managementlibrary.service.Impl;
 
-import com.example.managementlibrary.common.Filter;
-import com.example.managementlibrary.dto.request.RoleRequest;
 import com.example.managementlibrary.dto.request.UserRequest;
 import com.example.managementlibrary.dto.response.UserResponse;
 
-import com.example.managementlibrary.entity.Cart;
 import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.exception.GenericException;
 import com.example.managementlibrary.mapper.UserMapper;
@@ -14,31 +11,12 @@ import com.example.managementlibrary.repository.RoleRepository;
 import com.example.managementlibrary.repository.UserRepository;
 import com.example.managementlibrary.service.FilesStorageService;
 import com.example.managementlibrary.service.UserService;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, UserResponse> implements UserService {
@@ -72,23 +50,23 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
 
         element.setPassword(passwordEncoder.encode(element.getPassword()));
-        User user = transformDTOToEntity(element);
-        user.addCart();
-        validationUser(user);
+        User User = transformDTOToEntity(element);
+        User.addCart();
+        validationUser(User);
 
 
 
-        return transformEntityToDTO(userRepository.save(user));
+        return transformEntityToDTO(userRepository.save(User));
     }
 
-    private void validationUser(User user) {
-        if(userRepository.existsByEmail(user.getEmail())&&userRepository.existsByPhone(user.getPhone())) {
+    private void validationUser(User User) {
+        if(userRepository.existsByEmail(User.getEmail())&&userRepository.existsByPhone(User.getPhone())) {
             throw new GenericException("Email: đã tồn tại,Phone number: đã tồn tại");
         }
-        else if(userRepository.existsByEmail(user.getEmail())){
+        else if(userRepository.existsByEmail(User.getEmail())){
             throw new GenericException("Email: đã tồn tại");
         }
-        else if(userRepository.existsByPhone(user.getPhone())){
+        else if(userRepository.existsByPhone(User.getPhone())){
             throw new GenericException("Phone number: đã tồn tại");
         }
     }
@@ -119,11 +97,11 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Override
     public void updateResetPasswordToken(String token, String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && user.isNoneLocked()) {
-            user.setToken(token);
+        User User = userRepository.findByEmail(email);
+        if (User != null && User.isNoneLocked()) {
+            User.setToken(token);
             /*    try {*/
-            userRepository.save(user);
+            userRepository.save(User);
             // }
            /* catch (Exception e){
                 throw new GenericException("Error occurred when adding");
@@ -136,12 +114,12 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Override
     public void updatePassword(String token, String newPassword) {
-        User user = userRepository.findByToken(token).orElseThrow(() -> new GenericException("Could not find user with the token " + token));
+        User User = userRepository.findByToken(token).orElseThrow(() -> new GenericException("Could not find user with the token " + token));
         newPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(newPassword);
-        user.setToken(null);
+        User.setPassword(newPassword);
+        User.setToken(null);
         //    try {
-        userRepository.save(user);
+        userRepository.save(User);
       /*  }catch (Exception e){
             throw new GenericException("Error occurred when adding");
         }*/
@@ -151,23 +129,23 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Override
     public void registerAccount(String token, UserRequest userRequest) {
-        User user = transformDTOToEntity(userRequest);
-        user.setToken(token);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.addCart();
-        validationUser(user);
-        userRepository.save(user);
+        User User = transformDTOToEntity(userRequest);
+        User.setToken(token);
+        User.setPassword(passwordEncoder.encode(User.getPassword()));
+        User.addCart();
+        validationUser(User);
+        userRepository.save(User);
 
 
     }
 
     public void verify(String token) {
-        User user = userRepository.findByToken(token).orElseThrow(() -> new GenericException("Could not find user with the token " + token));
-        if (!user.isNoneLocked()) {
-            user.setToken(null);
-            user.setNoneLocked(true);
+        User User = userRepository.findByToken(token).orElseThrow(() -> new GenericException("Could not find user with the token " + token));
+        if (!User.isNoneLocked()) {
+            User.setToken(null);
+            User.setNoneLocked(true);
             /*   try {*/
-            userRepository.save(user);
+            userRepository.save(User);
          /*   }
             catch (Exception e){
                 throw new GenericException("Error occurred when adding");
@@ -180,12 +158,12 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Override
     public void updatePassword(Long userId, String newPassword, String oldPassword) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new GenericException("Could not find any customer with id " + userId));
-        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+        User User = userRepository.findById(userId).orElseThrow(() -> new GenericException("Could not find any customer with id " + userId));
+        if (passwordEncoder.matches(oldPassword, User.getPassword())) {
             newPassword = passwordEncoder.encode(newPassword);
-            user.setPassword(newPassword);
+            User.setPassword(newPassword);
             /* try {*/
-            userRepository.save(user);
+            userRepository.save(User);
           /*  }
             catch (Exception e){
                 throw new GenericException("Error occurred when adding");
@@ -198,16 +176,16 @@ public class UserServiceImpl extends GenericServiceImp<User, Long, UserRequest, 
 
     @Override
     public void updateImage(Long id, String img) {
-        User user = userRepository.findById(id).orElseThrow(() -> new GenericException("User with id = " + id + "not exists"));
+        User User = userRepository.findById(id).orElseThrow(() -> new GenericException("User with id = " + id + "not exists"));
         try {
-            Resource file = storageService.load(user.getImg());
+            Resource file = storageService.load(User.getImg());
             file.getFile().delete();
         }
         catch (Exception e){
             //throw new GenericException("Change your image failed");
         }
-        user.setImg(img);
-        userRepository.save(user);
+        User.setImg(img);
+        userRepository.save(User);
     }
 
 }

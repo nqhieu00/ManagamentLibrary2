@@ -3,10 +3,6 @@ package com.example.managementlibrary.service.Impl;
 
 import com.example.managementlibrary.dto.response.BookResponse;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
-import com.example.managementlibrary.dto.response.UserResponse;
-import com.example.managementlibrary.entity.Book;
-import com.example.managementlibrary.entity.BorrowingItem;
-import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.mapper.BookMapper;
 import com.example.managementlibrary.mapper.BorrowingItemMapper;
 import com.example.managementlibrary.mapper.UserMapper;

@@ -5,9 +5,7 @@ import com.example.managementlibrary.dto.request.*;
 import com.example.managementlibrary.dto.response.LoginResponse;
 import com.example.managementlibrary.dto.response.TokenRefreshResponse;
 import com.example.managementlibrary.entity.RefreshToken;
-import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.exception.GenericException;
-import com.example.managementlibrary.repository.UserRepository;
 import com.example.managementlibrary.security.JwtUtils;
 import com.example.managementlibrary.security.MyUser;
 import com.example.managementlibrary.service.AuthService;
@@ -21,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

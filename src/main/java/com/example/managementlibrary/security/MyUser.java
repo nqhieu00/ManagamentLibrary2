@@ -34,18 +34,18 @@ public class MyUser implements UserDetails {
         this.isNoneLocked=isNoneLocked;
     }
 
-    public static MyUser build(User user){
+    public static MyUser build(User User){
 
-        List<GrantedAuthority> authorities=user.getRoles().stream()
+        List<GrantedAuthority> authorities= User.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
         return new MyUser(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
+                User.getId(),
+                User.getEmail(),
+                User.getPassword(),
                 authorities,
-                user.isNoneLocked());
+                User.isNoneLocked());
     }
 
     @Override

@@ -5,13 +5,10 @@ package com.example.managementlibrary.security;
 import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityManager;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,11 +22,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
 
-        User user=userRepository.findByEmail(s);
-        if(user==null){
+        User User =userRepository.findByEmail(s);
+        if(User ==null){
             throw new UsernameNotFoundException("User " + s + " was not found in the database");
         }
-        return MyUser.build(user);
+        return MyUser.build(User);
     }
 
 }

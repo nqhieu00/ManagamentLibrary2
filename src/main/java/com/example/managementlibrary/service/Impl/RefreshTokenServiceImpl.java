@@ -1,17 +1,14 @@
 package com.example.managementlibrary.service.Impl;
 
 import com.example.managementlibrary.entity.RefreshToken;
-import com.example.managementlibrary.exception.ApiError;
 import com.example.managementlibrary.exception.GenericException;
 import com.example.managementlibrary.repository.RefreshTokenRepository;
 import com.example.managementlibrary.repository.UserRepository;
 import com.example.managementlibrary.service.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;

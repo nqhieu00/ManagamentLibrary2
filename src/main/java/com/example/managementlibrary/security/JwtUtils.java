@@ -61,9 +61,9 @@ public class JwtUtils {
     public boolean validateJwtToken(String authToken){
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-            User user=userRepository.findByEmail(getUserNameFromJwtToken(authToken));
-            if(user!=null){
-                return refreshTokenRepository.existsById(user.getId());
+            User User =userRepository.findByEmail(getUserNameFromJwtToken(authToken));
+            if(User !=null){
+                return refreshTokenRepository.existsById(User.getId());
             }
             return false;
 

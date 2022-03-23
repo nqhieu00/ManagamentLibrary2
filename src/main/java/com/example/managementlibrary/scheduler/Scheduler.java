@@ -2,23 +2,17 @@ package com.example.managementlibrary.scheduler;
 
 import com.example.managementlibrary.common.Mail;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
-import com.example.managementlibrary.entity.Borrowing;
-import com.example.managementlibrary.entity.BorrowingItem;
 import com.example.managementlibrary.entity.User;
-import com.example.managementlibrary.repository.BorrowingItemRepository;
 import com.example.managementlibrary.repository.BorrowingRepository;
 import com.example.managementlibrary.repository.UserRepository;
 import com.example.managementlibrary.service.BorrowingItemService;
-import com.example.managementlibrary.service.BorrowingService;
 import com.example.managementlibrary.service.MailService;
 import com.example.managementlibrary.service.StatisticService;
-import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -71,9 +65,9 @@ public class Scheduler {
 
     private void sendMailUser(Long k, BorrowingItemResponse v) throws MessagingException {
         Mail mail=new Mail();
-        User user=userRepository.getById(k);
+        User User =userRepository.getById(k);
         mail.setMailFrom("ptdapm60th1@gmail.com");
-        mail.setMailTo(user.getEmail());
+        mail.setMailTo(User.getEmail());
         mail.setMailSubject("Thong bao");
         String book=v.getBook().getName();
         Date borrowed=borrowingRepository.getById(v.getBorrowingId()).getBorrowedDate();

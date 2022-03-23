@@ -1,15 +1,11 @@
 package com.example.managementlibrary.service.Impl;
 
 import com.example.managementlibrary.dto.request.BorrowingItemRequest;
-import com.example.managementlibrary.dto.request.BorrowingRequest;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
 import com.example.managementlibrary.entity.Book;
-import com.example.managementlibrary.entity.Borrowing;
 import com.example.managementlibrary.entity.BorrowingItem;
-import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.exception.GenericException;
 import com.example.managementlibrary.mapper.BorrowingItemMapper;
-import com.example.managementlibrary.mapper.BorrowingMapper;
 import com.example.managementlibrary.repository.BookRepository;
 import com.example.managementlibrary.repository.BorrowingItemRepository;
 import com.example.managementlibrary.repository.BorrowingRepository;
@@ -19,12 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class BorrowingItemServiceImpl extends GenericServiceImp<BorrowingItem, Long, BorrowingItemRequest, BorrowingItemResponse> implements BorrowingItemService {
