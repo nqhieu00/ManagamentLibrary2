@@ -3,6 +3,7 @@ package com.example.managementlibrary.controller;
 import com.example.managementlibrary.dto.response.BookResponse;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
 import com.example.managementlibrary.dto.response.UserResponse;
+import com.example.managementlibrary.entity.Book;
 import com.example.managementlibrary.entity.BorrowingItem;
 import com.example.managementlibrary.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class StatisticController  {
     }
     @PreAuthorize("hasAnyRole('SUPERADMIN')")
     @GetMapping("/bookBorrowing")
-    public ResponseEntity<List<BookResponse>> getBookBorrowing(){
+    public ResponseEntity<Map<Long,Long>> getBookBorrowing(){
         return new ResponseEntity<>(statisticService.getBookBorrowing(),HttpStatus.OK);
     }
     @PreAuthorize("hasAnyRole('SUPERADMIN')")

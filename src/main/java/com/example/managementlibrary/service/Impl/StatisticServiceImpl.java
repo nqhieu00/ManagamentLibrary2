@@ -4,6 +4,7 @@ package com.example.managementlibrary.service.Impl;
 import com.example.managementlibrary.dto.response.BookResponse;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
 import com.example.managementlibrary.dto.response.UserResponse;
+import com.example.managementlibrary.entity.Book;
 import com.example.managementlibrary.entity.BorrowingItem;
 import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.mapper.BookMapper;
@@ -56,7 +57,7 @@ public class StatisticServiceImpl implements StatisticService {
     public Map<Long,Long> getBookBorrowedGT() {
 
         Map<Long,Long> map=new HashMap();
-        borrowingItemRepository.getBookIdWithCount().stream().forEach(e->addMap(e,map));
+        borrowingItemRepository.getBookBorrowing().stream().forEach(e->addMap(e,map));
         Map<Long,Long> sortMap=map.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
@@ -85,8 +86,12 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public List<BookResponse> getBookBorrowing() {
-        return borrowingItemRepository.getBookBorrowing().stream().map(e->bookMapper.entityToDto(e)).collect(Collectors.toList());
+    public Map<Long,Long> getBookBorrowing() {
+        Map<Long,Long> map=new HashMap();
+        borrowingItemRepository.getBookBorrowing().stream().forEach(e->addMap(e,map));
+
+
+        return map;
     }
 
 
@@ -99,15 +104,15 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     private void addMap(Long id, Map<Long, List<BorrowingItemResponse>> map, Date date, boolean b) {
-        List<BorrowingItemResponse>list=borrowingItemRepository.findByPaydayLessThanAndStatusAndBorrowing_UserId(date,b,id)
-                .stream().map(e->borrowingItemMapper.entityToDto(e)).collect(Collectors.toList());
+        List<BorrowingItemResponse>list=borrowingItemRepository.findByPaydayLessThanAndStatusAndBorrowing_UserId(date,b,id).stream().filter(e->e.getBorrowing().getStatus()==1)
+                .map(e->borrowingItemMapper.entityToDto(e)).collect(Collectors.toList());
         map.put(id,list);
     }
 
 
 
     private void addMap(Long[] e, Map map) {
-        map.put(e[0],e[1]);
+        map.put( (e[0]),e[1]);
     }
 
 

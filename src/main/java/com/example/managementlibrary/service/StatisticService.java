@@ -3,6 +3,7 @@ package com.example.managementlibrary.service;
 import com.example.managementlibrary.dto.response.BookResponse;
 import com.example.managementlibrary.dto.response.BorrowingItemResponse;
 import com.example.managementlibrary.dto.response.UserResponse;
+import com.example.managementlibrary.entity.Book;
 import com.example.managementlibrary.entity.BorrowingItem;
 
 
@@ -15,6 +16,6 @@ public interface StatisticService {
     HashMap<String,Long> totalMain();
     Map<Long,Long> getBookBorrowedGT();
     List<BookResponse> getBookExist();
-    List<BookResponse> getBookBorrowing();
+    Map<Long,Long> getBookBorrowing();
     Map<Long,List<BorrowingItemResponse>> getBookExpired();
 }

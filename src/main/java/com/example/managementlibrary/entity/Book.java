@@ -2,6 +2,7 @@ package com.example.managementlibrary.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Book extends Base{
 

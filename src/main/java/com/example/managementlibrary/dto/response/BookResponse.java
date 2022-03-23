@@ -2,10 +2,12 @@ package com.example.managementlibrary.dto.response;
 
 import com.example.managementlibrary.entity.Base;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Data
+@ToString
 public class BookResponse extends Base {
     private String name;
     private String image;

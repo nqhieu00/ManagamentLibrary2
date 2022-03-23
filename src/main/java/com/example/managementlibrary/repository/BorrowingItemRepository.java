@@ -8,15 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface BorrowingItemRepository extends GenericRepository<BorrowingItem,Long>{
 
     List<BorrowingItem> findByPaydayLessThanAndStatus(Date payday,Boolean status);
     List<BorrowingItem> findByBorrowingId(Long id);
-    @Query("SELECT b.book.id,count(b.book.id) from BorrowingItem as b group by b.book.id")
-    List<Long[]> getBookIdWithCount();
-    @Query("SELECT b.book from BorrowingItem as b where b.status=false group by b.book ")
-    List<Book> getBookBorrowing();
+    @Query("SELECT b.book.id,count(b.book.id) from BorrowingItem as b where b.status=false and b.borrowing.status=1 group by b.book ")
+    List<Long[]> getBookBorrowing();
     @Query("SELECT b.user from BorrowingItem as b_i join b_i.borrowing as b  where b_i.payday<?1 and b_i.status=?2  group by b.user")
     List<User> getUserBookExpired(Date payday,Boolean status);
 
