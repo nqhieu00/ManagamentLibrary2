@@ -108,7 +108,7 @@ public class SecurityConfig {
                     .antMatchers("/v1/api/auth/**",
                             "/v1/api/users/reset_password")
                     .permitAll()
-                    .antMatchers(HttpMethod.GET,"/v1/api/books/*","/v1/api/books","/v1/api/comments/book/{id}").permitAll()
+                    .antMatchers(HttpMethod.GET,"/v1/api/books/*","/v1/api/books","/v1/api/comments/book/*","/v1/api/users/*/logout").permitAll()
                     .anyRequest().authenticated();
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         }
