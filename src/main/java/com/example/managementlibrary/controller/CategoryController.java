@@ -19,6 +19,7 @@ public class CategoryController extends GenericAPI<Category,Long, CategoryReques
     }
 
     @Override
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<Page<CategoryResponse>> getPage( @RequestParam(value = "page") Integer page,
                                                            @RequestParam(value = "limit") Integer limit,
                                                            @RequestParam(value = "sort") String sort,
