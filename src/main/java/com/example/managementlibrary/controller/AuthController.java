@@ -54,7 +54,7 @@ public class AuthController {
             String verityLink ="https://final-thuvienthuyloi.netlify.app/successRegister?token=" + token;
             mailService.sendEmailVerityAccount(signupRequest.getEmail(),  signupRequest.getName(), verityLink);
 
-            return new ResponseEntity("Please check your mail to verify your account", HttpStatus.OK);
+            return new ResponseEntity("Please check your mail to verify your account:"+token, HttpStatus.OK);
         } catch (MessagingException | GenericException e) {
             return new ResponseEntity(new ApiError(HttpStatus.CONFLICT, "Register failed", e), HttpStatus.CONFLICT);
         }
