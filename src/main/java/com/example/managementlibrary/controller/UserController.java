@@ -108,6 +108,7 @@ public class UserController extends GenericAPI<User, Long, UserRequest, UserResp
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('USER','ADMIN','SUPERADMIN')")
     public ResponseEntity<UserResponse> update(@Validated @RequestBody UserRequest dto, @PathVariable Long id) {
         return super.update(dto, id);
     }
