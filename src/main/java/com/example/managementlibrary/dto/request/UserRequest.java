@@ -31,7 +31,7 @@ public class UserRequest {
     @NotBlank
     private String addr;
     private String img;
-    @Pattern(regexp="(^$|[0-9]{10})")
+    @Pattern(regexp="(0[0-9]{9})")
     private String phone;
     private boolean isNoneLocked=true;
 

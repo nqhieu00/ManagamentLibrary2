@@ -129,8 +129,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                     }
                     else if(msg.contains("UK_h9trv4xhmh6s68vbw9ba6to70")){
                         msg="Nhà xuất bản đã tồn tại";
+
                     }
                     else if(msg.contains("UK_ob8kqyqqgmefl0aco34akdtpe")){
+
                         msg="Email đã tồn tại";
                     }
                     else if(msg.contains("UK_589idila9li6a4arw1t8ht1gx")){

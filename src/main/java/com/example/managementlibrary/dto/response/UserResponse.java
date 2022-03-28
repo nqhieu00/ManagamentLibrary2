@@ -14,7 +14,6 @@ import java.util.Set;
 @ToString
 public class UserResponse extends BaseDto {
 
-
     private String name;
 
     private String email;
@@ -32,7 +31,5 @@ public class UserResponse extends BaseDto {
 
     private boolean isNoneLocked;
 
-
-    @NotNull
     private Set<RoleRequest> roles;
 }
