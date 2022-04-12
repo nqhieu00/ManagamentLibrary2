@@ -1,6 +1,7 @@
 package com.example.managementlibrary.service.Impl;
 
 import com.example.managementlibrary.entity.RefreshToken;
+import com.example.managementlibrary.entity.User;
 import com.example.managementlibrary.exception.GenericException;
 import com.example.managementlibrary.repository.RefreshTokenRepository;
 import com.example.managementlibrary.repository.UserRepository;
@@ -29,9 +30,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public RefreshToken createRefreshToken(Long userId) {
+    public RefreshToken createRefreshToken(Long userId,String jwt) {
         RefreshToken refreshToken = refreshTokenRepository.findById(userId).orElse(new RefreshToken());
-        refreshToken.setUser(userRepository.findById(userId).get());
+        User user=userRepository.findById(userId).get();
+        user.setToken(jwt);
+        refreshToken.setUser(user);
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken = refreshTokenRepository.save(refreshToken);
@@ -52,7 +55,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public void deleteRefreshToken(Long userId) {
         if( refreshTokenRepository.existsById(userId)){
-            refreshTokenRepository.deleteById(userId);
+            RefreshToken refreshToken= refreshTokenRepository.findById(userId).get();
+            refreshToken.setToken(null);
+            refreshTokenRepository.save(refreshToken);
+
         }
 
     }
