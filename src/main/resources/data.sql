@@ -16,9 +16,9 @@ WHERE NOT EXISTS (
         SELECT name FROM role WHERE name = 'ROLE_USER'
     ) LIMIT 1;
 INSERT INTO user (email,password,is_none_locked)
-SELECT * FROM (SELECT 'admin','$2a$10$26xBiNrZY9Kbt9wCimSHt...qqFNAMcJv2PjBiq41Y5Tt6k7jzCt.',true) AS tmp
+SELECT * FROM (SELECT 'admin@admin.com','$2a$10$26xBiNrZY9Kbt9wCimSHt...qqFNAMcJv2PjBiq41Y5Tt6k7jzCt.',true) AS tmp
 WHERE NOT EXISTS (
-        SELECT name FROM user WHERE email = 'admin'
+        SELECT name FROM user WHERE email = 'admin@admin.com'
     ) LIMIT 1;
 
 INSERT INTO user_role(user_id, role_id)

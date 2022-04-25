@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
 
             MyUser userDetails = (MyUser) authentication.getPrincipal();
             String jwt = jwtUtils.generateJwtToken(authentication);
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId(),jwt);
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());
