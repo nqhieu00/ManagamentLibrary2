@@ -77,7 +77,6 @@ public class SecurityConfig {
 
 
     @Configuration
-    @Order(1)
     public static class SecurityConfigJwt extends WebSecurityConfigurerAdapter{
 
         @Autowired
@@ -115,102 +114,6 @@ public class SecurityConfig {
         }
     }
 
-//    @Configuration
-//    @Order(2)
-//    public static class SecurityConfigAdmin extends WebSecurityConfigurerAdapter {
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.antMatcher("/admin/**")
-//                    .authorizeRequests()
-//                    .antMatchers("/admin/assets/**").permitAll()
-//                    .anyRequest()
-//                    .hasRole("ADMIN")
-//
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/loginAdmin")
-//                    .usernameParameter("username")
-//                    .passwordParameter("password")
-//                    .loginProcessingUrl("/admin/login")
-//                    .failureUrl("/loginAdmin?error=loginError")
-//                    .successHandler(myAuthenticationSuccessHandler())
-//
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/admin/logout")
-//                    //   .logoutSuccessUrl("/loginAdmin")
-//                    .logoutSuccessHandler(logoutSuccessHandler())
-//                    // .deleteCookies("JSESSIONID")
-//                    .deleteCookies("accessToken")
-//
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedPage("/403")
-//
-//                    .and()
-//                    .csrf().disable();
-//
-//
-//        }
-//
-//        @Bean
-//        public PersistentTokenRepository persistentTokenRepository() {
-//            InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
-//            return memory;
-//        }
-//
-//    }
-//
-//    @Configuration
-//    @Order(3)
-//    public static class SecurityConfigUser extends WebSecurityConfigurerAdapter {
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//
-//            http.antMatcher("/user/**")
-//                    .authorizeRequests()
-//                    .antMatchers("/user/**")
-//                    .authenticated()
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/")
-//                    .usernameParameter("username")
-//                    .passwordParameter("password")
-//                    .loginProcessingUrl("/user/login")
-//                    .successHandler(myAuthenticationSuccessHandler())
-//                    .failureUrl("/?error=loginError")
-//
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/user/logout")
-//                    .logoutSuccessHandler(logoutSuccessHandler())
-//                    //    .deleteCookies("JSESSIONID")
-//                    .deleteCookies("accessToken")
-//
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedPage("/403_user")
-//
-//                    .and()
-//                    .csrf().disable();
-//
-//        }
-//
-//    }
-
-//    @Configuration
-//    @Order(4)
-//    public class SecurityConfigAll extends WebSecurityConfigurerAdapter {
-//
-//
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.authorizeRequests().anyRequest().authenticated().and()
-//                    .csrf().disable();
-//        }
-//    }
 
 
 }
