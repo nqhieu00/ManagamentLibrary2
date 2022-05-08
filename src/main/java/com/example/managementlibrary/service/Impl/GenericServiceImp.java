@@ -1,6 +1,7 @@
 package com.example.managementlibrary.service.Impl;
 
 
+import com.example.managementlibrary.common.EOperator;
 import com.example.managementlibrary.common.Filter;
 import com.example.managementlibrary.entity.CartItem;
 import com.example.managementlibrary.exception.GenericException;
@@ -125,6 +126,7 @@ public abstract class GenericServiceImp<E, I extends Serializable, D1,D2> implem
         else if(fieldType.isAssignableFrom(Long.class)){
             return Long.valueOf(value);
         }
+
         return null;
     }
 
